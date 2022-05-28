@@ -36,5 +36,12 @@ namespace TikiFake.Controllers
 
             return Ok(await _userRepository.Delete(id));
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ServiceResponses<List<User>>>> Update(string id, User user)
+        {
+            return Ok(await _userRepository.Update(id, user));
+        }
+
     }
 }

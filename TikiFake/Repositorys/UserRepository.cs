@@ -44,7 +44,28 @@ namespace TikiFake.Repositorys
 
         public async Task<ServiceResponses<List<User>>> Update(string id, User user)
         {
-            throw new NotImplementedException();
+            var serviceResponses = new ServiceResponses<List<User>>();
+            if (id == null)
+            {
+                serviceResponses.Message = "Id cannot null";
+                serviceResponses.Success = false;
+                return serviceResponses;
+            }
+            var dbUser = await _user.Find(s => s.Id == id).FirstOrDefaultAsync();
+            if (dbUser != null)
+            {
+                _user.ReplaceOne(s => s.Id == id, user);
+                serviceResponses.Message = "Update Thanh Cong";
+                var dbUserFull = await _user.Find(s => true).ToListAsync();
+                serviceResponses.Data = dbUserFull.ToList();
+
+            }
+            else
+            {
+                serviceResponses.Message = $"Can not find the id: {id}";
+                serviceResponses.Success = false;
+            }
+            return serviceResponses;
         }
 
         public async Task<ServiceResponses<List<User>>> Delete(string id)
