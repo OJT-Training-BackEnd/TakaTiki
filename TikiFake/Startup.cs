@@ -38,8 +38,10 @@ namespace TikiFake
                 sp => sp.GetRequiredService<IOptions<UserstoreDatabaseSettings>>().Value);
 
             services.AddTransient<IUserRepository, UserRepository>();
-            
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
+
+            services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TikiFake", Version = "v1" });
