@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +20,16 @@ namespace TikiFake.Repositorys
     {
         private readonly IMongoCollection<User> _user;
         private readonly IMapper _mapper;
-        public UserRepository(IUserstoreDatabaseSettings settings, IMapper mapper)
+        private readonly IConfiguration _configuration;
+        public UserRepository(IUserstoreDatabaseSettings settings,
+                            IMapper mapper,
+                            IConfiguration configuration)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _user = database.GetCollection<User>(settings.UsersCollectionName);
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task<ServiceResponses<List<User>>> Get()
@@ -153,10 +161,15 @@ namespace TikiFake.Repositorys
                 return response;
             }
 
-            response.Success = true;
-            response.Message = "Login successed";
-            response.Data = user.Id;
+            if (user != null)
+            {
+                response.Success = true;
+                response.Message = "Login successed";
+                response.Data = CreateToken(user);
+                return response;
+            }
             return response;
+
         }
 
         public bool UserExists(string username)
@@ -176,6 +189,35 @@ namespace TikiFake.Repositorys
                 // Get the hashed string.  
                 return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             }
+        }
+
+        //JWT
+        private string CreateToken(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username)
+            };
+
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = System.DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+
+            // JWT security token handler.
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor); 
+
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }
