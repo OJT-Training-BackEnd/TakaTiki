@@ -45,7 +45,7 @@ namespace TikiFake.Controllers
         public async Task<ActionResult<ServiceResponses<List<UserRegisterDto>>>> Register (UserRegisterDto user)
 
         {
-            var response = await _userRepository.Register(user);
+            var response = await _userRepository.Register(user, user.Password);
             if (!response.Success)
                 return BadRequest(response);
             return Ok(response);

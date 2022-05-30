@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\project-vs\\Takatiki\\TakaTiki\\TikiFake\\TikiFake.csproj": {}
+    "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj": {}
   },
   "projects": {
-    "C:\\project-vs\\Takatiki\\TakaTiki\\TikiFake\\TikiFake.csproj": {
+    "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\project-vs\\Takatiki\\TakaTiki\\TikiFake\\TikiFake.csproj",
+        "projectUniqueName": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj",
         "projectName": "TikiFake",
-        "projectPath": "C:\\project-vs\\Takatiki\\TakaTiki\\TikiFake\\TikiFake.csproj",
+        "projectPath": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\project-vs\\Takatiki\\TakaTiki\\TikiFake\\obj\\",
+        "outputPath": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -3,6 +3,8 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using TikiFake.DatabaseSettings;
 using TikiFake.Dtos.User;
@@ -99,7 +101,7 @@ namespace TikiFake.Repositorys
             return serviceResponses;
         }
 
-        public async Task<ServiceResponses<int>> Register(UserRegisterDto newUser)
+        public async Task<ServiceResponses<int>> Register(UserRegisterDto newUser, string password)
         {
             var response = new ServiceResponses<int>();
             if (UserExists(newUser.Username))
@@ -108,6 +110,10 @@ namespace TikiFake.Repositorys
                 response.Message = "User already exists.";
                 return response;
             }
+
+            var passwordHash = getHash(password);
+            newUser.Password = passwordHash;
+
             User user = _mapper.Map<User>(newUser);
             _user.InsertOne(user);
             response.Message = "Register sucessed";
@@ -118,15 +124,20 @@ namespace TikiFake.Repositorys
         {
             var response = new ServiceResponses<string>();
 
-            var user = _user.Find(s => s.Username.Equals(username)).FirstOrDefault();
-            var pass = _user.Find(x => x.Password.Equals(password)).FirstOrDefault();
-
             if (string.IsNullOrEmpty(username))
             {
                 response.Success = false;
-                response.Message = "Please enter your account.";
+                response.Message = "Please enter your username.";
                 return response;
             }
+            if (string.IsNullOrEmpty(password))
+            {
+                response.Success = false;
+                response.Message = "Please enter your password.";
+                return response;
+            }
+
+            var user = _user.Find(s => s.Username.Equals(username)).FirstOrDefault();
 
             if (user == null)
             {
@@ -135,12 +146,13 @@ namespace TikiFake.Repositorys
                 return response;
             }
 
-            if (pass == null)
+            var password_login = getHash(password);
+            if (password_login != user.Password)
             {
-                response.Success = false;
-                response.Message = "Please enter your password.";
+                response.Message = "Wrong password";
                 return response;
             }
+
             response.Success = true;
             response.Message = "Login successed";
             response.Data = user.Id;
@@ -153,6 +165,17 @@ namespace TikiFake.Repositorys
             if (user == null)
                 return false;
             return true;    
+        }       
+        
+        private string getHash(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                // Send a sample text to hash.  
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                // Get the hashed string.  
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
         }
     }
 }

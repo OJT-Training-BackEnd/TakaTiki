@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MQ60DVocx1dlzAAYaLPu0eKteTBP6jKW/tAP7w3o8PVfrfhIdb1QMwVw59jaGSQkRd7CaCWCB7saYy30U+S2NA==",
+  "dgSpecHash": "VfZEAMMKjGbXAE/unz2YRIR0m1JBwFp2zIJx4wbhlrTSihk4umTMmNUeDhBTGOgWq4kBl9xhvwYtkt21YWXXpQ==",
   "success": true,
-  "projectFilePath": "C:\\project-vs\\Takatiki\\TakaTiki\\TikiFake\\TikiFake.csproj",
+  "projectFilePath": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
