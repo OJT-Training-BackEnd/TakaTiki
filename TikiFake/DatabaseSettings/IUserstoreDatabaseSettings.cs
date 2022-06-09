@@ -8,6 +8,7 @@ namespace TikiFake.DatabaseSettings
      public interface IUserstoreDatabaseSettings
     {
         public string UsersCollectionName { get; set; }
+        public string RefreshTokensCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
