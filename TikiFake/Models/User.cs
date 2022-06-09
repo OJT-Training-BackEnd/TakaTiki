@@ -22,6 +22,7 @@ namespace TikiFake.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
+        [BsonRepresentation(BsonType.String)]
         [BsonElement("role")]
         public List<Roles> Role { get; set; } = new List<Roles> { Roles.CUSTOMER };
         
