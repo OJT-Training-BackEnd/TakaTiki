@@ -12,10 +12,7 @@ namespace TikiFake.Repositorys
         Task<ServiceResponses<List<User>>> Get();
         Task<ServiceResponses<User>> Get(string id);
         Task<ServiceResponses<List<User>>> Update (string id, User user);
-        Task<ServiceResponses<List<User>>> Delete (string id);
-        Task<ServiceResponses<int>> Register(UserRegisterDto user, string password);
-        Task<ServiceResponses<string>> login(string username, string password);
-        bool UserExists(string username);
+        leuleu 
 
     }
 }
