@@ -38,19 +38,72 @@ namespace TikiFake.Repositorys
 
         public async Task<ServiceResponses<List<User>>> Get()
         {
-            var serviceResponses = new ServiceResponses<List<User>>();
-            var dbUser = await _user.Find(s => true).ToListAsync();
-            serviceResponses.Data = dbUser.ToList();
-            return serviceResponses;
+             var response = new ServiceResponses<string>();
+
+            if (string.IsNullOrEmpty(username))
+            {
+                response.Success = false;
+                response.Message = "Please enter your username.";
+                return response;
+            }
+            if (string.IsNullOrEmpty(password))
+            {
+                response.Success = false;
+                response.Message = "Please enter your password.";
+                return response;
+            }
+
+            var user = _user.Find(s => s.Username.Equals(username)).FirstOrDefault();
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "User not found.";
+                return response;
+            }
+
+            var password_login = getHash(password);
+            if (password_login != user.Password)
+            {
+                response.Message = "Wrong password";
+                return response;
+            }
+            var token = CreateToken(user);
+            if (user != null)
+            {
+                response.Success = true;
+                response.Message = "Login successed";
+                response.Data = token;
+                return response;
+            }
+            return response;
         }
 
         public async Task<ServiceResponses<User>> Get(string id)
         {
-            var serviceResponses = new ServiceResponses<User>();
-            var dbUser = await _user.Find(s => s.Id == id).FirstOrDefaultAsync();
-            serviceResponses.Data = dbUser;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor); 
 
-            return serviceResponses;
+            var accessToken = tokenHandler.WriteToken(token);
+            var refreshToken = GenerateRefreshToken();
+
+            var refreshTokenEntity = new RefreshToken
+            {
+                RTokenId = Guid.NewGuid(),
+                JwtId = token.Id,
+                UserId = user.Id,
+                Token = refreshToken,
+                isUsed = false,
+                isRevoked = false,
+                IssuedAt = DateTime.UtcNow,
+                ExpiredAt = DateTime.UtcNow.AddMinutes(10)
+            };
+            _refreshToken.InsertOne(refreshTokenEntity);
+            return new TokenModel
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
         }
 
 
