@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj": {}
+    "D:\\OJT\\TakaTiki\\TikiFake\\TikiFake.csproj": {}
   },
   "projects": {
-    "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj": {
+    "D:\\OJT\\TakaTiki\\TikiFake\\TikiFake.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj",
+        "projectUniqueName": "D:\\OJT\\TakaTiki\\TikiFake\\TikiFake.csproj",
         "projectName": "TikiFake",
-        "projectPath": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\TikiFake.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\project-vs\\Takatiki\\clone\\TakaTiki\\TikiFake\\obj\\",
+        "projectPath": "D:\\OJT\\TakaTiki\\TikiFake\\TikiFake.csproj",
+        "packagesPath": "C:\\Users\\jike\\.nuget\\packages\\",
+        "outputPath": "D:\\OJT\\TakaTiki\\TikiFake\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\jike\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -91,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }
