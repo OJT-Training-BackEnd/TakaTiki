@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +33,6 @@ namespace TikiFake
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.Configure<UserstoreDatabaseSettings>(
                 Configuration.GetSection(nameof(UserstoreDatabaseSettings)));
 
@@ -42,8 +41,8 @@ namespace TikiFake
 
             services.AddTransient<IUserRepository, UserRepository>();
 
-            services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
-            //services.AddControllers();
+            /*services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());*/
+            services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -53,11 +52,14 @@ namespace TikiFake
                 {
                     op.TokenValidationParameters = new TokenValidationParameters
                     {
+                        //ký vào token 
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             System.Text.Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        //tự cấp token 
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
 
@@ -93,6 +95,7 @@ namespace TikiFake
             app.UseAuthentication(); 
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

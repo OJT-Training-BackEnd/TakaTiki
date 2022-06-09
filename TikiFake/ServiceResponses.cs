@@ -7,7 +7,7 @@ namespace TikiFake
 {
     public class ServiceResponses<T>
     {
-        public T Data { get; set; }
+        public object Data { get; set; }
         public bool Success { get; set; } = true;
         public string Message { get; set; }
     }

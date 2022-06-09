@@ -32,6 +32,15 @@ namespace TikiFake.Controllers
             return Ok(await _userRepository.Get(id));
         }
 
+        [HttpGet]
+        public ActionResult<object> GetMe()
+        {
+            var username = User?.Identity?.Name;
+            var username2 = User.FindFirstValue(ClaimTypes.Name);
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            return Ok(new { username, username2, role });
+        }
+
         // Get by Id
         [HttpGet("GetById")]
         public async Task<ActionResult<ServiceResponses<User>>> Get(string id)
@@ -78,6 +87,15 @@ namespace TikiFake.Controllers
 
         {
             var response = await _userRepository.login(userName, password);
+            if (!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }
+        [AllowAnonymous]
+        [HttpPost("Renew")]
+        public async Task<ActionResult<ServiceResponses<List<User>>>> RenewToken(TokenModel model)
+        {
+            var response = await _userRepository.RenewToken(model);
             if (!response.Success)
                 return BadRequest(response);
             return Ok(response);
