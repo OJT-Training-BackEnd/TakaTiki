@@ -18,37 +18,9 @@ namespace TikiFake.Repositorys
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IMongoCollection<User> _user;
-        private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
-        public UserRepository(IUserstoreDatabaseSettings settings,
-                            IMapper mapper,
-                            IConfiguration configuration)
-        {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-            _user = database.GetCollection<User>(settings.UsersCollectionName);
-            _mapper = mapper;
-            _configuration = configuration;
-        }
+        
 
-        public async Task<ServiceResponses<List<User>>> Get()
-        {
-            var serviceResponses = new ServiceResponses<List<User>>();
-            var dbUser = await _user.Find(s => true).ToListAsync();
-            serviceResponses.Data = dbUser.ToList();
-            return serviceResponses;
-        }
-
-        public async Task<ServiceResponses<User>> Get(string id)
-        {
-            var serviceResponses = new ServiceResponses<User>();
-            var dbUser = await _user.Find(s => s.Id == id).FirstOrDefaultAsync();
-            serviceResponses.Data = dbUser;
-
-            return serviceResponses;
-        }
-
+        
         public async Task<ServiceResponses<List<User>>> Update(string id, User user)
         {
             var serviceResponses = new ServiceResponses<List<User>>();
