@@ -19,6 +19,7 @@ namespace TikiFake.Repositorys
 {
     public class UserRepository : IUserRepository
     {
+
         private readonly IMongoCollection<User> _user;
         private readonly IMongoCollection<RefreshToken> _refreshToken;
         private readonly IMapper _mapper;
@@ -52,6 +53,8 @@ namespace TikiFake.Repositorys
             return serviceResponses;
         }
 
+
+        
         public async Task<ServiceResponses<List<User>>> Update(string id, User user)
         {
             var serviceResponses = new ServiceResponses<List<User>>();
